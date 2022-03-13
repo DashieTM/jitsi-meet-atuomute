@@ -344,7 +344,7 @@ class AbstractVideoManager extends PureComponent<Props> {
     automuteDisable(value) {
         jitsiLocalStorage.setItem(_enableShortcutsKey, value);
     }
-
+/* blet */
     /**
      * Seeks video to provided time.
      *
