@@ -3,7 +3,9 @@
 import Logger from '@jitsi/logger';
 import throttle from 'lodash/throttle';
 import { PureComponent } from 'react';
+import {store} from '../../../base/redux';
 
+import { jitsiLocalStorage } from '@jitsi/js-utils';
 import { sendAnalytics, createSharedVideoEvent as createEvent } from '../../../analytics';
 import { getCurrentConference } from '../../../base/conference';
 import { MEDIA_TYPE } from '../../../base/media';
@@ -15,6 +17,9 @@ import { dockToolbox } from '../../../toolbox/actions.web';
 import { muteLocal } from '../../../video-menu/actions.any';
 import { setSharedVideoStatus, stopSharedVideo } from '../../actions.any';
 import { PLAYBACK_STATUSES } from '../../constants';
+import { getMoreTabProps } from '../../../settings';
+
+
 
 const logger = Logger.getLogger(__filename);
 
@@ -106,7 +111,8 @@ export type Props = {
      /**
       * The video id.
       */
-     videoId: string
+     videoId: string,
+     
 }
 
 /**
@@ -124,7 +130,7 @@ class AbstractVideoManager extends PureComponent<Props> {
         super();
 
         this.throttledFireUpdateSharedVideoEvent = throttle(this.fireUpdateSharedVideoEvent.bind(this), 5000);
-
+        
         // selenium tests handler
         window._sharedVideoPlayer = this;
     }
@@ -325,14 +331,18 @@ class AbstractVideoManager extends PureComponent<Props> {
      *
      * @returns {void}
      */
-    smartAudioMute() {
+   smartAudioMute() {
         const { _isLocalAudioMuted, _muteLocal } = this.props;
 
         if (!_isLocalAudioMuted
-            && this.isSharedVideoVolumeOn()) {
+            && this.isSharedVideoVolumeOn() && !getMoreTabProps(this.store.getState()).disableAutoMute) {
             sendAnalytics(createEvent('audio.muted'));
             _muteLocal(true);
         }
+    }
+
+    automuteDisable(value) {
+        jitsiLocalStorage.setItem(_enableShortcutsKey, value);
     }
 
     /**

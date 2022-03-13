@@ -277,3 +277,5 @@ export function shouldHideSelfView(state: Object) {
 export function getHideSelfView(state: Object) {
     return state['features/base/config'].disableSelfView || state['features/base/settings'].disableSelfView;
 }
+
+

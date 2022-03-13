@@ -4,6 +4,7 @@ import { isNameReadOnly } from '../base/config';
 import { SERVER_URL_CHANGE_ENABLED, getFeatureFlag } from '../base/flags';
 import { i18next, DEFAULT_LANGUAGE, LANGUAGES } from '../base/i18n';
 import { createLocalTrack } from '../base/lib-jitsi-meet/functions';
+import { getStartWithAudioMuted } from '../base/media';
 import {
     getLocalParticipant,
     isLocalParticipantModerator
@@ -90,6 +91,7 @@ export function getNotificationsMap(stateful: Object | Function) {
     const state = toState(stateful);
     const { notifications } = state['features/base/config'];
     const { userSelectedNotifications } = state['features/base/settings'];
+    
 
     return Object.keys(userSelectedNotifications)
         .filter(key => !notifications || notifications.includes(key))
@@ -115,7 +117,6 @@ export function getMoreTabProps(stateful: Object | Function) {
     const language = i18next.language || DEFAULT_LANGUAGE;
     const configuredTabs = interfaceConfig.SETTINGS_SECTIONS || [];
     const enabledNotifications = getNotificationsMap(stateful);
-
     // when self view is controlled by the config we hide the settings
     const { disableSelfView, disableSelfViewSettings } = state['features/base/config'];
 
@@ -130,7 +131,8 @@ export function getMoreTabProps(stateful: Object | Function) {
         enabledNotifications,
         showNotificationsSettings: Object.keys(enabledNotifications).length > 0,
         showPrejoinPage: !state['features/base/settings'].userSelectedSkipPrejoin,
-        showPrejoinSettings: state['features/base/config'].prejoinConfig?.enabled
+        showPrejoinSettings: state['features/base/config'].prejoinConfig?.enabled,
+        AutoMute: state['features/base/settings'].disableAutoMute
     };
 }
 

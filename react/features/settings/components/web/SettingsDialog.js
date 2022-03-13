@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 
 import { getAvailableDevices } from '../../../base/devices';
 import { DialogWithTabs, hideDialog } from '../../../base/dialog';
-import { connect } from '../../../base/redux';
+import { connect, toState } from '../../../base/redux';
 import { isCalendarEnabled } from '../../../calendar-sync';
 import {
     DeviceSelection,
@@ -144,7 +144,7 @@ function _mapStateToProps(state) {
     const moderatorTabProps = getModeratorTabProps(state);
     const { showModeratorSettings } = moderatorTabProps;
     const { showLanguageSettings, showNotificationsSettings, showPrejoinSettings } = moreTabProps;
-    const showMoreTab = showLanguageSettings || showNotificationsSettings || showPrejoinSettings;
+    const showMoreTab = showLanguageSettings || showNotificationsSettings || showPrejoinSettings || disableAutoMute;
     const showProfileSettings
         = configuredTabs.includes('profile') && !state['features/base/config'].disableProfile;
     const showCalendarSettings
@@ -246,7 +246,8 @@ function _mapStateToProps(state) {
                     currentLanguage: tabState.currentLanguage,
                     hideSelfView: tabState.hideSelfView,
                     showPrejoinPage: tabState.showPrejoinPage,
-                    enabledNotifications: tabState.enabledNotifications
+                    enabledNotifications: tabState.enabledNotifications,
+                    disableAutoMute: tabState.disableAutoMute,
                 };
             },
             styles: 'settings-pane more-pane',
