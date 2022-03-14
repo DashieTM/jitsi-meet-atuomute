@@ -10,7 +10,7 @@ import {
     isLocalParticipantModerator
 } from '../base/participants';
 import { toState } from '../base/redux';
-import { getHideSelfView } from '../base/settings';
+import { getHideSelfView, getAutoMute } from '../base/settings';
 import { parseStandardURIString } from '../base/util';
 import { isFollowMeActive } from '../follow-me';
 import { isReactionsEnabled } from '../reactions/functions.any';
@@ -132,9 +132,11 @@ export function getMoreTabProps(stateful: Object | Function) {
         showNotificationsSettings: Object.keys(enabledNotifications).length > 0,
         showPrejoinPage: !state['features/base/settings'].userSelectedSkipPrejoin,
         showPrejoinSettings: state['features/base/config'].prejoinConfig?.enabled,
-        AutoMute: state['features/base/settings'].disableAutoMute
+        disableAutoMute: getAutoMute(state)
     };
 }
+
+
 
 /**
  * Returns the properties for the "More" tab from settings dialog from Redux
