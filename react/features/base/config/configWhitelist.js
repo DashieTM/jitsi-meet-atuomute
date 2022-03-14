@@ -114,6 +114,7 @@ export default [
     'disableRemoteMute',
     'disableResponsiveTiles',
     'disableRtx',
+    'disableAutoMute',
     'disableSelfView',
     'disableSelfViewSettings',
     'disableScreensharingVirtualBackground',

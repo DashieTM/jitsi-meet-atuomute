@@ -278,4 +278,27 @@ export function getHideSelfView(state: Object) {
     return state['features/base/config'].disableSelfView || state['features/base/settings'].disableSelfView;
 }
 
+/**
+ * Gets the disable self view setting.
+ *
+ * @param {Object} state - Redux state.
+ * @returns {boolean}
+ */
+ export function getAutoMute(state: Object) {
+    return state['features/base/settings'].disableAutoMute;
+}
+
+
+/**
+ * Gets the disable self view setting.
+ *
+ *
+ * @returns {boolean}
+ */
+ export function getAutoMuteSpecial() {
+    return this.state['features/base/settings'].disableAutoMute;
+}
+
+
+
 

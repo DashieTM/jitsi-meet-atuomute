@@ -117,8 +117,8 @@ export function submitMoreTab(newState: Object): Function {
             dispatch(updateSettings({ disableSelfView: newState.hideSelfView }));
         }
 
-        if (newState.AutoMute !== currentState.AutoMute) {
-            dispatch(updateSettings({ disableAutoMute: newState.AutoMute }));
+        if (newState.disableAutoMute !== currentState.disableAutoMute) {
+            dispatch(updateSettings({ disableAutoMute: newState.disableAutoMute }));
         }
     };
 }
