@@ -3,12 +3,11 @@
 import Logger from '@jitsi/logger';
 import throttle from 'lodash/throttle';
 import { PureComponent } from 'react';
-import {StateListenerRegistry, store} from '../../../base/redux';
 
-import { jitsiLocalStorage } from '@jitsi/js-utils';
 import { sendAnalytics, createSharedVideoEvent as createEvent } from '../../../analytics';
 import { getCurrentConference } from '../../../base/conference';
 import { MEDIA_TYPE } from '../../../base/media';
+import { getAutoMute } from '../../../base/settings/functions.any';
 import { getLocalParticipant } from '../../../base/participants';
 import { isLocalTrackMuted } from '../../../base/tracks';
 import { NOTIFICATION_TIMEOUT_TYPE } from '../../../notifications';
@@ -17,9 +16,6 @@ import { dockToolbox } from '../../../toolbox/actions.web';
 import { muteLocal } from '../../../video-menu/actions.any';
 import { setSharedVideoStatus, stopSharedVideo } from '../../actions.any';
 import { PLAYBACK_STATUSES } from '../../constants';
-import { getAutoMute } from '../../../base/settings/functions.any';
-
-
 
 
 const logger = Logger.getLogger(__filename);
@@ -341,7 +337,7 @@ class AbstractVideoManager extends PureComponent<Props> {
      */
    smartAudioMute() {
         const { _isLocalAudioMuted, _muteLocal,_disableAutoMute } = this.props;
-       //let MuteState = getAutoMute(['features/base/settings']).disableAutoMute;
+
         if (!_isLocalAudioMuted
             && this.isSharedVideoVolumeOn() && !_disableAutoMute) {
             sendAnalytics(createEvent('audio.muted'));
@@ -352,7 +348,6 @@ class AbstractVideoManager extends PureComponent<Props> {
       /**
      * Inverse of audio mute at the end of a video, or when paused.
      * 
-     *
      * @returns {void}
      */
    smartAudioMuteStop() {
@@ -364,10 +359,6 @@ class AbstractVideoManager extends PureComponent<Props> {
     }
 }
 
-    automuteDisable(value) {
-        jitsiLocalStorage.setItem(_enableShortcutsKey, value);
-    }
-/* blet */
     /**
      * Seeks video to provided time.
      *

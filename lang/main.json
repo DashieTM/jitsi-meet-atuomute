@@ -934,6 +934,7 @@
         "startReactionsMuted": "Mute reaction sounds for everyone",
         "startVideoMuted": "Everyone starts hidden",
         "talkWhileMuted": "Talk while muted",
+        "disableAutoMute": "Auto-Mute",
         "title": "Settings"
     },
     "settingsView": {
@@ -1215,7 +1216,8 @@
         "show": "Show on stage",
         "showSelfView": "Show self view",
         "videoMuted": "Camera disabled",
-        "videomute": "Participant has stopped the camera"
+        "videomute": "Participant has stopped the camera",
+        "disableAutoMute": "disable Auto-Mute on Youtube playback."
     },
     "virtualBackground": {
         "addBackground": "Add background",

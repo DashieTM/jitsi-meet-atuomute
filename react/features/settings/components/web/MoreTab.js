@@ -6,7 +6,6 @@ import DropdownMenu, {
 } from '@atlaskit/dropdown-menu';
 import React from 'react';
 
-import { jitsiLocalStorage } from '@jitsi/js-utils';
 import keyboardShortcut from '../../../../../modules/keyboardshortcut/keyboardshortcut';
 import { AbstractDialogTab } from '../../../base/dialog';
 import type { Props as AbstractDialogTabProps } from '../../../base/dialog';
@@ -289,8 +288,8 @@ class MoreTab extends AbstractDialogTab<Props, State> {
     _ondisableAutoMuteChanged: (Object) => void;
 
     /**
-     * Callback invoked to select if the lobby
-     * should be shown.
+     * Callback invoked to select if the user
+     * should be automuted during youtube video playback.
      *
      * @param {Object} e - The key event to handle.
      *
@@ -406,7 +405,7 @@ class MoreTab extends AbstractDialogTab<Props, State> {
 
 
     /**
-     * Returns the React Element for disable Automute settings.
+     * Returns the React Element for Automute settings.
      *
      * @private
      * @returns {ReactElement}
@@ -423,7 +422,7 @@ class MoreTab extends AbstractDialogTab<Props, State> {
                 </h2>
                 <Checkbox
                     isChecked = { disableAutoMute }
-                    label = { t('settings.disableAutoMute') }
+                    label = { t('videothumbnail.disableAutoMute') }
                     name = 'disable-auto-mute'
                     onChange = { this._ondisableAutoMuteChanged } />
             </div>
