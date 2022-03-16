@@ -1217,7 +1217,7 @@
         "showSelfView": "Show self view",
         "videoMuted": "Camera disabled",
         "videomute": "Participant has stopped the camera",
-        "disableAutoMute": "disable Auto-Mute on Youtube playback."
+        "disableAutoMute": "Disable Auto-Mute on Youtube playback."
     },
     "virtualBackground": {
         "addBackground": "Add background",

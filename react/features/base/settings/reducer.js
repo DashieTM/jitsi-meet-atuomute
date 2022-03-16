@@ -15,6 +15,7 @@ import { SETTINGS_UPDATED } from './actionTypes';
  * @type Object
  */
 const DEFAULT_STATE = {
+    audioLevel: 0.0,
     audioOutputDeviceId: undefined,
     avatarURL: undefined,
     cameraDeviceId: undefined,

@@ -1,6 +1,11 @@
 /* @flow */
 
 import React, { Component } from 'react';
+import { PureComponent } from 'react';
+import { setAudioLevel } from '../actions';
+import { getAudioLevel } from '../';
+import { dockToolbox } from '../../toolbox/actions.web';
+import { connect } from '../../base/redux';
 
 /**
  * The number of dots to display in AudioLevelIndicator.
@@ -15,35 +20,57 @@ const AUDIO_LEVEL_DOTS = 5;
 const CENTER_DOT_INDEX = Math.floor(AUDIO_LEVEL_DOTS / 2);
 
 /**
- * The type of the React {@code Component} props of {@link AudioLevelIndicator}.
+ * The type of the React {@link PureComponent} props of {@link AudioLevelIndicator}.
  */
-type Props = {
+export type Props = {
 
     /**
      * The current audio level to display. The value should be a number between
      * 0 and 1.
      */
-    audioLevel: number
+    _audioLevel: number,
+
+     /**
+     * Sets the new Audio level.
+     */
+    _setAudioLevel: Function,
 };
+
+/*this.state = {
+    audioLevel: typeof passedAudioLevel === 'number' && !isNaN(passedAudioLevel)
+    ? Math.min(passedAudioLevel * 1.2, 1) : 0
+};*/
 
 /**
  * Creates a ReactElement responsible for drawing audio levels.
  *
  * @augments {Component}
  */
-class AudioLevelIndicator extends Component<Props> {
+class AudioLevelIndicator extends PureComponent<Props> {
+   /**
+     * Initializes a new instance of AbstractVideoManager.
+     *
+     * @returns {void}
+     */
+    constructor() {
+        super();
+    }
+
+  
     /**
-     * Implements React's {@link Component#render()}.
+     * Implements React's {@link PureComponent#render()}.
      *
      * @inheritdoc
      * @returns {ReactElement}
      */
     render() {
-        const { audioLevel: passedAudioLevel } = this.props;
+        const { _audioLevel, _setAudioLevel } = this.props;
 
         // First make sure we are sensitive enough.
-        const audioLevel = typeof passedAudioLevel === 'number' && !isNaN(passedAudioLevel)
-            ? Math.min(passedAudioLevel * 1.2, 1) : 0;
+        const audioLevel = typeof _audioLevel === 'number' && !isNaN(_audioLevel)
+            ? Math.min(_audioLevel * 1.2, 1) : 0;
+
+        //_setAudioLevel(audioLevel);
 
         // Let's now stretch the audio level over the number of dots we have.
         const stretchedAudioLevel = AUDIO_LEVEL_DOTS * audioLevel;
@@ -82,4 +109,33 @@ class AudioLevelIndicator extends Component<Props> {
     }
 }
 
-export default AudioLevelIndicator;
+export default connect(_mapStateToProps, _mapDispatchToProps)(AudioLevelIndicator);
+
+/**
+ * Maps part of the Redux store to the props of this component.
+ *
+ * @param {Object} state - The Redux state.
+ * @returns {Props}
+ */
+ export function _mapStateToProps(state: Object): $Shape<Props> {
+    const _audioLevel = getAudioLevel(state);
+
+    return {
+        _audioLevel
+    };
+}
+
+
+/**
+ * Maps part of the props of this component to Redux actions.
+ *
+ * @param {Function} dispatch - The Redux dispatch function.
+ * @returns {Props}
+ */
+ export function _mapDispatchToProps(dispatch: Function): $Shape<Props> {
+    return {
+        _setAudioLevel: _audioLevel => {
+            dispatch(setAudioLevel( _audioLevel ));
+        }
+    };
+}

@@ -1,4 +1,5 @@
 *.swp
+*.tgz
 .*.tmp
 deploy-local.sh
 libs/

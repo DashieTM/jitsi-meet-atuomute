@@ -44,9 +44,19 @@ type Props = AudioSettingsEntryProps & {
     listHeaderId: string,
 
     /**
-    * Used to decide whether to listen to audio level changes.
-    */
+     * Used to decide whether to listen to audio level changes.
+     */
     measureAudioLevels: boolean,
+
+    /**
+     *  Voice activation opt in
+     */
+    enableVoiceActivation: Boolean,
+
+    /**
+     * Voice Activation treshhold
+     */
+    treshholdVoiceActivation: number,
 }
 
 type State = {

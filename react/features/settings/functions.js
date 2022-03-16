@@ -15,7 +15,9 @@ import { parseStandardURIString } from '../base/util';
 import { isFollowMeActive } from '../follow-me';
 import { isReactionsEnabled } from '../reactions/functions.any';
 
+
 import { SS_DEFAULT_FRAME_RATE, SS_SUPPORTED_FRAMERATES } from './constants';
+import { getAudioLevel } from '../base/settings/functions.any';
 
 declare var interfaceConfig: Object;
 
@@ -294,7 +296,9 @@ export function createLocalAudioTracks(devices: Object[], timeout: ?number) {
             let hasError = false;
 
             try {
+                if(getAudioLevel(state) > 0.5) {
                 jitsiTrack = await createLocalTrack('audio', deviceId, timeout);
+                }
             } catch (err) {
                 hasError = true;
             }
@@ -327,3 +331,5 @@ export function getAudioSettingsVisibility(state: Object) {
 export function getVideoSettingsVisibility(state: Object) {
     return state['features/settings'].videoSettingsVisible;
 }
+
+

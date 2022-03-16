@@ -42,7 +42,7 @@ type Props = AudioSettingsContentProps & {
     /**
      * The popup placement enum value.
      */
-    popupPlacement: string
+    popupPlacement: string,
 }
 
 /**

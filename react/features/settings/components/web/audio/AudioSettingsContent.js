@@ -11,6 +11,7 @@ import { createLocalAudioTracks } from '../../../functions';
 import AudioSettingsHeader from './AudioSettingsHeader';
 import MicrophoneEntry from './MicrophoneEntry';
 import SpeakerEntry from './SpeakerEntry';
+import { getAudioLevel } from '../../../../audio-level-indicator';
 
 const browser = JitsiMeetJS.util.browser;
 
@@ -56,6 +57,12 @@ export type Props = {
     setAudioOutputDevice: Function,
 
    /**
+   * The current audio level to display. The value should be a number between
+   * 0 and 1.
+   */
+    _audioLevel: number,
+
+   /**
     * A list of objects containing the labels and deviceIds
     * of all the output devices.
     */
@@ -66,6 +73,8 @@ export type Props = {
     * of all the input devices.
     */
     microphoneDevices: Object[],
+
+
 
     /**
      * Invoked to obtain translated strings.
@@ -235,8 +244,10 @@ class AudioSettingsContent extends Component<Props, State> {
         }
 
         this._disposeTracks(this.state.audioTracks);
-
-        const audioTracks = await createLocalAudioTracks(this.props.microphoneDevices, 5000);
+        if(_audioLevel > 0.5) {
+            const audioTracks = await  createLocalAudioTracks(this.props.microphoneDevices, 5000);
+        }
+        else { return; }
 
         if (this._componentWasUnmounted) {
             this._disposeTracks(audioTracks);
@@ -348,3 +359,19 @@ class AudioSettingsContent extends Component<Props, State> {
 }
 
 export default translate(AudioSettingsContent);
+
+
+/**
+ * Maps part of the Redux store to the props of this component.
+ *
+ * @param {Object} state - The Redux state.
+ * @returns {Props}
+ */
+ export function _mapStateToProps(state: Object): $Shape<Props> {
+    const _audioLevel = getAudioLevel(state);
+
+    return {
+        _audioLevel
+    };
+}
+
