@@ -2,8 +2,8 @@
 
 import React, { Component } from 'react';
 import { PureComponent } from 'react';
+import { getAudioLevel } from '../../base/settings';
 import { setAudioLevel } from '../actions';
-import { getAudioLevel } from '../';
 import { dockToolbox } from '../../toolbox/actions.web';
 import { connect } from '../../base/redux';
 
@@ -70,7 +70,7 @@ class AudioLevelIndicator extends PureComponent<Props> {
         const audioLevel = typeof _audioLevel === 'number' && !isNaN(_audioLevel)
             ? Math.min(_audioLevel * 1.2, 1) : 0;
 
-        //_setAudioLevel(audioLevel);
+        _setAudioLevel(audioLevel);
 
         // Let's now stretch the audio level over the number of dots we have.
         const stretchedAudioLevel = AUDIO_LEVEL_DOTS * audioLevel;
@@ -109,33 +109,24 @@ class AudioLevelIndicator extends PureComponent<Props> {
     }
 }
 
-export default connect(_mapStateToProps, _mapDispatchToProps)(AudioLevelIndicator);
-
 /**
- * Maps part of the Redux store to the props of this component.
- *
- * @param {Object} state - The Redux state.
- * @returns {Props}
- */
- export function _mapStateToProps(state: Object): $Shape<Props> {
-    const _audioLevel = getAudioLevel(state);
+* Maps part of the Redux store to the props of this component.
+*
+* @param {Object} state - The Redux state.
+* @returns {Props}
+*/
+export function _mapStateToProps(state: Object): $Shape<Props> {
 
     return {
-        _audioLevel
+        _audioLevel: getAudioLevel(state)
     };
 }
 
 
-/**
- * Maps part of the props of this component to Redux actions.
- *
- * @param {Function} dispatch - The Redux dispatch function.
- * @returns {Props}
- */
- export function _mapDispatchToProps(dispatch: Function): $Shape<Props> {
+const _mapDispatchToProps = (dispatch, ownProps) => {
     return {
-        _setAudioLevel: _audioLevel => {
-            dispatch(setAudioLevel( _audioLevel ));
-        }
-    };
+        _setAudioLevel: () => setAudioLevel(ownProps._audioLevel)
+    }
 }
+
+export default connect(_mapStateToProps , _mapDispatchToProps)(AudioLevelIndicator);

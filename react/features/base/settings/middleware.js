@@ -14,6 +14,8 @@ import { parseURLParams } from '../util';
 import { SETTINGS_UPDATED } from './actionTypes';
 import { updateSettings } from './actions';
 import { handleCallIntegrationChange, handleCrashReportingChange } from './functions';
+import { SET_AUDIO_LEVEL } from '../../audio-level-indicator/actionTypes';
+import { setAudioLevel } from '../../audio-level-indicator/actions';
 
 
 /**
@@ -45,7 +47,11 @@ MiddlewareRegistry.register(store => next => action => {
     case SET_LOCATION_URL:
         _updateLocalParticipantFromUrl(store);
         break;
+    case SET_AUDIO_LEVEL:
+        _setAudioLevel(store);
+        break;
     }
+    
 
     return result;
 });
@@ -221,4 +227,16 @@ function _updateLocalParticipantFromUrl({ dispatch, getState }) {
             email
         }));
     }
+}
+
+/**
+ * Sets the new audio level
+ *
+ * @param {Store} store - audiolevel.
+ * @returns {void}
+ */
+function _setAudioLevel( {dispatch, getState} ) {
+        dispatch(updateSettings({
+            audioLevel
+        }));
 }

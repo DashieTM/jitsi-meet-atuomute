@@ -955,7 +955,7 @@ export default {
 
         const localAudio = getLocalJitsiAudioTrack(APP.store.getState());
 
-        if (!localAudio && !mute) {
+        if (!localAudio && !mute || APP.store.getState()['features/base/settings'].audioLevel > 0.5) {
             const maybeShowErrorDialog = error => {
                 showUI && APP.store.dispatch(notifyMicError(error));
             };

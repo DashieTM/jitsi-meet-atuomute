@@ -274,7 +274,7 @@ function _mapStateToProps(state, ownProps) {
 
     return {
         _muted: state['features/base/config'].startSilent,
-        _volume: participantsVolume[ownProps.participantId]
+        _volume: participantsVolume[ownProps.participantId],
     };
 }
 

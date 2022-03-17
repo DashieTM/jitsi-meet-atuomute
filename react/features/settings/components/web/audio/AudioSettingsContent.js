@@ -11,7 +11,7 @@ import { createLocalAudioTracks } from '../../../functions';
 import AudioSettingsHeader from './AudioSettingsHeader';
 import MicrophoneEntry from './MicrophoneEntry';
 import SpeakerEntry from './SpeakerEntry';
-import { getAudioLevel } from '../../../../audio-level-indicator';
+import { getAudioLevel } from '../../../../base/settings/functions.any';
 
 const browser = JitsiMeetJS.util.browser;
 
@@ -244,11 +244,7 @@ class AudioSettingsContent extends Component<Props, State> {
         }
 
         this._disposeTracks(this.state.audioTracks);
-        if(_audioLevel > 0.5) {
-            const audioTracks = await  createLocalAudioTracks(this.props.microphoneDevices, 5000);
-        }
-        else { return; }
-
+        const audioTracks = await  createLocalAudioTracks(this.props.microphoneDevices, 5000);
         if (this._componentWasUnmounted) {
             this._disposeTracks(audioTracks);
         } else {

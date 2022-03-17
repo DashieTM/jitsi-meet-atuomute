@@ -1,7 +1,6 @@
 // @flow
 
 import '../analytics/reducer';
-import '../audio-level-indicator/reducer'
 import '../authentication/reducer';
 import '../av-moderation/reducer';
 import '../base/app/reducer';
