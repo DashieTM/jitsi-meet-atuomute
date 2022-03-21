@@ -1,6 +1,7 @@
 // @flow
 
 import '../analytics/middleware';
+import '../audio-level-indicator/middleware'
 import '../av-moderation/middleware';
 import '../base/conference/middleware';
 import '../base/config/middleware';

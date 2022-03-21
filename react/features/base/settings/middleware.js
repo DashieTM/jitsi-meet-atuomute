@@ -47,9 +47,6 @@ MiddlewareRegistry.register(store => next => action => {
     case SET_LOCATION_URL:
         _updateLocalParticipantFromUrl(store);
         break;
-    case SET_AUDIO_LEVEL:
-        _setAudioLevel(store);
-        break;
     }
     
 
@@ -229,14 +226,3 @@ function _updateLocalParticipantFromUrl({ dispatch, getState }) {
     }
 }
 
-/**
- * Sets the new audio level
- *
- * @param {Store} store - audiolevel.
- * @returns {void}
- */
-function _setAudioLevel( {dispatch, getState} ) {
-        dispatch(updateSettings({
-            audioLevel
-        }));
-}

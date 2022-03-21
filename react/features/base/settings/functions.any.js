@@ -295,5 +295,5 @@ export function getHideSelfView(state: Object) {
  * @returns {number}
  */
  export function getAudioLevel(state: Object) {
-    return state['features/base/settings'].audioLevel;
+    return state['features/audio-level-indicator'].audioLevel;
 }
