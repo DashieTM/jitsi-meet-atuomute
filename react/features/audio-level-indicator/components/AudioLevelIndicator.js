@@ -92,7 +92,7 @@ class AudioLevelIndicator extends PureComponent<Props> {
     render() {
         const { _audioLevel, _setAudioLevel , _processor} = this.props;
 
-        const processor = _processor();
+        //const processor = _processor();
 
         // First make sure we are sensitive enough.
         const audioLevel = typeof _audioLevel === 'number' && !isNaN(_audioLevel)
@@ -100,8 +100,8 @@ class AudioLevelIndicator extends PureComponent<Props> {
 
         //console.log(_audioLevel);
         //processor.then(value => value._convertTo16BitPCM(value._wasmPcmInputF32Index));
-        processor.then(value => this.props._setAudioLevel(value._wasmInterface._rnnoise_process_frame(value._context, value._wasmPcmOutput, value._wasmPcmInput)));
-        console.log(processor);
+        _processor().then(value => _setAudioLevel(value._wasmInterface._rnnoise_process_frame(value._context, value._wasmPcmOutput, value._wasmPcmInput)));
+        //console.log(_processor);
         // Let's now stretch the audio level over the number of dots we have.
         const stretchedAudioLevel = AUDIO_LEVEL_DOTS * audioLevel;
 
